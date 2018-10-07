@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# compile param1.asm program
+nasm -f elf32 $1.asm					#create object file
+ld -o $1 -melf_i386 -e main $1.o 		#create executable
+
+echo "compiling $1 ..."
