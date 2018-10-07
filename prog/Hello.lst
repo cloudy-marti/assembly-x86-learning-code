@@ -1,0 +1,23 @@
+     1                                  ; Premier programme en assembleur
+     2                                  
+     3                                  SECTION .data ; Section des donnees.
+     4                                  msg :
+     5 00000000 48656C6C6F20576F72-         db "Hello World", 10 ; La chaine de caracteres a afficher,
+     5 00000009 6C640A             
+     6                                                           ; 10 est le code ASCII du retour a la ligne.
+     7                                  
+     8                                  SECTION .text            ; Section du code.
+     9                                  global main              ; Rend l'etiquette visible de l'exterieur.
+    10                                  main :                   ; Etiquette pointant au debut du programme.
+    11 00000000 BA0C000000                  mov edx, 0xc         ; arg3, nombre de caracteres a afficher
+    12                                                           ; (equivalent a mov edx, 12).
+    13 00000005 B9[00000000]                mov ecx, msg         ; arg2, adresse du premier caractere
+    14                                                           ; a afficher.
+    15 0000000A BB01000000                  mov ebx, 1           ; arg1, numero de la sortie pour l'affichage,
+    16                                                           ; 1 est la sortie standard.
+    17 0000000F B804000000                  mov eax, 4           ; Numero de la commande write pour
+    18                                                           ; l'interruption 0x80.
+    19 00000014 CD80                        int 0x80             ; Interruption 0x80, appel au noyau.
+    20 00000016 BB00000000                  mov ebx, 0           ; Code de sortie, 0 est la sortie normale.
+    21 0000001B B801000000                  mov eax, 1           ; Numero de la commande exit.
+    22 00000020 CD80                        int 0x80             ; Interruption 0x80, appel au noyau.

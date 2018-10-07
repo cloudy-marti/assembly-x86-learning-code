@@ -1,0 +1,18 @@
+     1                                  SECTION .data
+     2                                  msg :
+     3 00000000 4C276F7264696E6174-         db "L'ordinateur va s'éteindre !", 10, 0
+     3 00000009 657572207661207327-
+     3 00000012 C3A97465696E647265-
+     3 0000001B 20210A00           
+     4                                  
+     5                                  SECTION .text
+     6                                  global main
+     7                                  main :
+     8 00000000 BA1F000000                  mov edx, 0x1f 
+     9 00000005 B9[00000000]                mov ecx, msg  
+    10 0000000A BB01000000                  mov ebx, 1
+    11 0000000F B804000000                  mov eax, 4
+    12 00000014 CD80                        int 0x80
+    13 00000016 BB00000000                  mov ebx, 0
+    14 0000001B B801000000                  mov eax, 1 
+    15 00000020 CD80                        int 0x80

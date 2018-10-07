@@ -1,0 +1,31 @@
+     1                                  SECTION .data
+     2                                  debut :
+     3 00000000 4C65207072656D6965-         db "Le premier TP ", 0
+     3 00000009 722054502000       
+     4                                  fin :
+     5 0000000F 657374207072657371-     	db "est presque terminé !", 10, 0
+     5 00000018 7565207465726D696E-
+     5 00000021 C3A920210A00       
+     6                                  
+     7                                  SECTION .text
+     8                                  
+     9                                  global main
+    10                                  main :
+    11                                  	; print debut message to stdout
+    12 00000000 BA0F000000                  mov edx, 0xf
+    13 00000005 B9[00000000]                mov ecx, debut
+    14 0000000A BB01000000                  mov ebx, 1
+    15 0000000F B804000000                  mov eax, 4
+    16 00000014 CD80                        int 0x80
+    17                                  
+    18                                      ; print fin message to stdout
+    19 00000016 BA17000000                  mov edx, 0x17
+    20 0000001B B9[0F000000]                mov ecx, fin
+    21 00000020 BB01000000                  mov ebx, 1
+    22 00000025 B804000000                  mov eax, 4
+    23 0000002A CD80                        int 0x80
+    24                                  
+    25                                      ; exit program
+    26 0000002C BB00000000                  mov ebx, 0
+    27 00000031 B801000000                  mov eax, 1
+    28 00000036 CD80                        int 0x80
