@@ -1,4 +1,4 @@
-     1                                  SECTION .data
+     1                                  SECTION .data           ; constant var declared here
      2                                  msg :
      3 00000000 4C276F7264696E6174-         db "L'ordinateur va s'éteindre !", 10, 0
      3 00000009 657572207661207327-
@@ -8,11 +8,11 @@
      5                                  SECTION .text
      6                                  global main
      7                                  main :
-     8 00000000 BA1F000000                  mov edx, 0x1f 
-     9 00000005 B9[00000000]                mov ecx, msg  
-    10 0000000A BB01000000                  mov ebx, 1
-    11 0000000F B804000000                  mov eax, 4
-    12 00000014 CD80                        int 0x80
+     8 00000000 BA1F000000                  mov edx, 0x1f       ; display 31 characters
+     9 00000005 B9[00000000]                mov ecx, msg        ; constant declared into SECTION .data
+    10 0000000A BB01000000                  mov ebx, 1          ; print to stdout
+    11 0000000F B804000000                  mov eax, 4          ; command write number
+    12 00000014 CD80                        int 0x80            ; interruption to call write function from linux kernel
     13 00000016 BB00000000                  mov ebx, 0
-    14 0000001B B801000000                  mov eax, 1 
+    14 0000001B B801000000                  mov eax, 1          ; command exit number
     15 00000020 CD80                        int 0x80
