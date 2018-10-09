@@ -7,6 +7,5 @@ ld -o $1 -melf_i386 -e main $1.o 		#create executable
 
 #clean
 rm -f $1.o
-rm -f $1
 
 echo "compiling $1 ..."
