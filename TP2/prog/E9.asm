@@ -15,6 +15,7 @@ newline : db 10, 0
 SECTION .bss
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 _int : resd 1
+_adr : resd 1
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 SECTION .text
@@ -30,8 +31,10 @@ main:
 	; ecx will be my index
 	mov ecx, 0
 
-	; clean edx
-	mov edx, 0
+	mov edx, eax
+	and edx, 0xFFFFFFFF
+	mov [_int], edx
+	;call print_int
 
 	; for loop
 for:
@@ -43,7 +46,7 @@ for:
 	; update eax with _int value
 	mov eax, [_int]
 	; push bits to the right 1 time
-	shr eax, 1
+	shl eax, 1
 	; update _int value
 	mov [_int], eax
 	; restart loop if CF equals 0
@@ -55,7 +58,7 @@ for:
 	jmp for
 end_for:
 
-	; print final counter value
+	; print counter value
 	mov eax, edx
 	call print_int
 

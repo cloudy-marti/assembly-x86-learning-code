@@ -33,23 +33,29 @@ main:
 	; for loop
 for:
 	add ecx, 1
-	; exit for loop if ecx > a
-	cmp ecx, [a]
+	; exit for loop if ecx > 32
+	cmp ecx, 32
 	jg end_for
 
-	; divide a / ecx
-	mov edx, 0
-	mov eax, [a]
-	div ecx
+	; update eax with _int value
+	mov eax, [_int]
+	; push bits to the left 1 time
+	shl eax, 1
+	; update _int value
+	mov [_int], eax
+	; jump to print_0 if CF value equals 0
+	jnc print_0
 
-	; check if division is euclidean and print divisor
-	cmp edx, 0
-	jne for
+	; print 1
+	mov eax, 1
 	call print_int
+	jmp for
 
-	; print a space
-	mov eax, space
-	call print_string
+	print_0:
+	; print 0
+	mov eax, 0
+	call print_int
+	jmp for
 
 	jmp for
 end_for:
@@ -62,3 +68,6 @@ end_for:
     mov ebx, 0
     mov eax, 1
     int 0x80 
+
+; jc = Jump if carry is set (C=1)
+; jnc = Jump if carry is not set (C=0)

@@ -1,3 +1,5 @@
+; courtesy of Vincent Agullo
+
 ; Author : MARTI Emilie
 ; Created on : 10/10/2018
 ; Objective : Read one integer from input and display the number of occurrencies of 1 in its binary form.
@@ -15,6 +17,7 @@ newline : db 10, 0
 SECTION .bss
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 _int : resd 1
+_adr : resd 1
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 SECTION .text
@@ -30,8 +33,9 @@ main:
 	; ecx will be my index
 	mov ecx, 0
 
-	; clean edx
-	mov edx, 0
+	mov edx, eax
+	and edx, 0xFFFFFFFF
+	;call print_int
 
 	; for loop
 for:
@@ -41,21 +45,20 @@ for:
 	jg end_for
 
 	; update eax with _int value
-	mov eax, [_int]
+	mov eax, edx
 	; push bits to the right 1 time
-	shr eax, 1
+	shl eax, 1
 	; update _int value
-	mov [_int], eax
 	; restart loop if CF equals 0
 	jnc for
 
 	; save counter value
-	add edx, 1
+	add eax, 1
 
 	jmp for
 end_for:
 
-	; print final counter value
+	; print counter value
 	mov eax, edx
 	call print_int
 

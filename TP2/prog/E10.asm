@@ -1,13 +1,13 @@
 ; Author : MARTI Emilie
 ; Created on : 10/10/2018
-; Objective : Read one integer from input and display the number of occurrencies of 1 in its binary form.
+; Objective : Read some integers between 0 and 50 from input and display the other ones.
 
 %include "asm_io.inc"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 SECTION .data
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-msg1 : db "Enter a number please : ", 0
+msg1 : db "Enter a number please between 0 and 50 and finish with -1 : ", 0
 space : db " ", 0
 newline : db 10, 0
 
