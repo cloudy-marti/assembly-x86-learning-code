@@ -25,7 +25,6 @@ main:
 	mov eax, msg1
 	call print_string
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  FILL ARRAY  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	; ecx will be my pointer
 	mov ecx, _int
 	; edx will be my index
@@ -33,37 +32,6 @@ main:
 	; eax will be the element
 	mov eax, 0
 
-	; pas besoin de remplir le tableau
-	; on a juste a mettre des 0 partout et ensuite remplacer par 1 chaque case
-	; qui correspond a ce que l'user a rentré
-	; puis on imprime les INDEX où il y a des 0
-	
-	; for loop to fill the array
-for:
-	; move element to [pointer + i]
-	add ecx, edx
-	mov [ecx], eax
-
-	; i++ && n++
-	add edx, 1
-	add eax, 1
-	
-	; exit for loop if eax is greater than 50
-	cmp eax, 50
-	jg end_for
-
-	jmp for
-end_for:
-
-	; clean ecx, eax and edx
-	mov ecx, _int
-	mov eax, 0
-	mov edx, 0
-
-	; ebx will be my counter
-	mov ebx, 0
-
-;;;;;;;;;;;;;;;;;;;;;;  TAKE INPUT AND COMPARE  ;;;;;;;;;;;;;;;;;;;;;
 	; while loop to take user input
 while:
 	; take user input
@@ -77,42 +45,41 @@ while:
 	cmp eax, 0
 	jl end_while
 
-	forint:
-		cmp edx, 50
-		jg end_forint
-
-		; if condition
-		; cmp eax, [ecx + edx]
-		; jne end_if
-		; 	sub ecx, 1
-		; end_if:
-
-		; i++
-		add edx, 1
-
-		jmp forint
-	end_forint:
+	; change array value to 1 to index == user input
+	mov byte [ecx + eax], 1
 
 	jmp while
 end_while:
 
+	; edx will be my index
+	mov edx, -1
+
 ; for loop to print
-; forprint:
-; 	cmp eax, 51
-; 	je end_forprint
+forprint:
+	; i++
+	add edx, 1
 
-; 	; print an \n-like character
-; 	mov eax, space
-; 	call print_string
+	; end for loop if array is all read
+	cmp edx, 51
+	je end_forprint
 
-; 	mov eax, [ecx + edx]
-; 	call print_int
+	; ecx will be my pointer
+	mov ecx, _int
+	add ecx, edx
 
-; 	; i++
-; 	add edx, 1
+	; restart for loop if value == 1
+	cmp byte [ecx], 1
+	je forprint
 
-; 	jmp forprint
-; end_forprint:
+	; print index and a space character if value == 0
+	mov eax, edx
+	call print_int
+
+	mov eax, space
+	call print_string
+
+	jmp forprint
+end_forprint:
 
 	; print an \n-like character
 	mov eax, newline
