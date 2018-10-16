@@ -1,60 +1,61 @@
 ; Author : MARTI Emilie
 ; Created on : 10/10/2018
-; Objective : Read one integer from input and display the number of occurrencies of 1 in its binary form.
+; Objective : Read some integers and display them inversed.
 
 %include "asm_io.inc"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 SECTION .data
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-msg1 : db "Enter a number please : ", 0
+msg1 : db "Enter some integers and finish with -1 : ", 0
 space : db " ", 0
 newline : db 10, 0
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 SECTION .bss
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-_int : resd 1
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 SECTION .text
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 global main
 main:
+	; save original esp address
+	mov ebp, esp
 
-; a = x (on stocke un input)
-; while a != 0
-; b = a -1 
-; a = a and b
-; c++
-; end
 	; take user input
 	mov eax, msg1
 	call print_string
-	
-	call read_int
-	mov [_int], eax
 
 	; ecx will be my counter
 	mov ecx, 0
 
-for:
-	mov eax, [_int]
-	; exit for loop if eax, which contains the updated _int, equals 0
-	cmp eax, 0
-	je end_for
-
-	sub eax, 1
-	mov ebx, eax
-
-	and [_int], ebx
+read_while:
 	add ecx, 1
-	jmp for
-end_for:
+	call read_int
+	push eax
+	cmp eax, -1
+	jne read_while
 
-	; print counter value
-	mov eax, ecx
+	; edx will be my index
+	mov edx, 0
+
+print_for:
+	add edx, 1
+	; exit for loop if edx = ecx
+	cmp edx, ecx
+	jg end_for
+
+	; print number
+	pop eax
 	call print_int
+	
+	; print a space
+	mov eax, space
+	call print_string
+
+	jmp print_for
+end_for:
 
 	; print an \n-like character
 	mov eax, newline
